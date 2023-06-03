@@ -3,6 +3,7 @@ int[] clicksX = new int[100];  // array to store x-coordinates of blobs
 int[] clicksY = new int[100];  // array to store y-coordinates of blobs
 float[] radius = new float[100];
 float[] noiseOffset = new float[100]; // offset for noise function
+int[] alphaValues = new int[100]; // alpha values for each blob
 int numBlobs = 0;
 float noiseFactor = 0.05;
 
@@ -14,6 +15,7 @@ void setup() {
   for (int i = 0; i < 100; i++) {
     radius[i] = 0; // Initialize radius to 0 for all blobs
     noiseOffset[i] = random(100); // Initialize noise offset
+    alphaValues[i] = 0; // Initialize alpha values to 0
   }
 }
 
@@ -25,8 +27,9 @@ void draw() {
     if (radius[i] <200) {
       radius[i] += 0.5; // Increase the radius slowly
     }
-    blob(clicksX[i], clicksY[i], radius[i]); // add noise to radius
+    blob(clicksX[i], clicksY[i], radius[i], alphaValues[i]); // add noise to radius
     noiseOffset[i] += 0.01; // increment noise offset
+    if(alphaValues[i] < 255) alphaValues[i] += 2; // increase the alpha value
   }
 
   // If there are fewer than 100 blobs, create a new one at the mouse position
@@ -40,18 +43,20 @@ void draw() {
       clicksY[i] = clicksY[i + 1];
       radius[i] = radius[i + 1];
       noiseOffset[i] = noiseOffset[i + 1];
+      alphaValues[i] = alphaValues[i + 1]; // Move the alpha values along the array
     }
     clicksX[99] = mouseX;
     clicksY[99] = mouseY;
     radius[99] = 0; // Reset the radius of the new blob
     noiseOffset[99] = random(100); // Initialize noise offset for the new blob
+    alphaValues[99] = 0; // Reset the alpha value for the new blob
   }
 }
 
-void blob(float x, float y, float r) {
+void blob(float x, float y, float r, int alphaValue) {
   beginShape();
   noStroke();
-  fill(33, 33, 33);
+  fill(33, 33, 33, alphaValue); // Add alpha value to fill function
   for (float angle = 0; angle < TWO_PI; angle += PI/50.0) {
     float noiseVal = noise((x + r * cos(angle)) * noiseFactor, (y + r * sin(angle)) * noiseFactor);
     float r2 = r + noiseVal * 10; // Increase radius based on noise value
