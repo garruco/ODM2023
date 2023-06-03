@@ -1,4 +1,4 @@
-int fps = 60;
+int fps = 30;
 int[] clicksX = new int[100];  // array to store x-coordinates of blobs
 int[] clicksY = new int[100];  // array to store y-coordinates of blobs
 float[] radius = new float[100];
@@ -29,13 +29,13 @@ void draw() {
   // Update and draw existing blobs
   for (int i = 0; i < numBlobs; i++) {
     noiseOffset[i] += 0.02;
-    if (radius[i] <200) {
+    if (radius[i] < 250) {
       radius[i] += 0.5; // Increase the radius slowly
     }
     blob(clicksX[i], clicksY[i], radius[i], alphaValues[i], noiseOffset[i]);
 
     noiseOffset[i] += 0.01; // increment noise offset
-    if (alphaValues[i] < 255) alphaValues[i] += 2; // increase the alpha value
+    if (alphaValues[i] < 50) alphaValues[i] += 2; // increase the alpha value
   }
 
   // If there are fewer than 100 blobs, create a new one at the mouse position
