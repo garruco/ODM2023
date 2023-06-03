@@ -6,10 +6,11 @@ float[] noiseOffset = new float[100]; // offset for noise function
 int[] alphaValues = new int[100]; // alpha values for each blob
 int numBlobs = 0;
 float noiseFactor = 0.05;
+PImage bg;
 
 void setup() {
   frameRate(fps);
-  size(750, 750);
+  size(750, 900);
   smooth();
   noiseSeed(1234);
   for (int i = 0; i < 100; i++) {
@@ -17,10 +18,14 @@ void setup() {
     noiseOffset[i] = random(100); // Initialize noise offset
     alphaValues[i] = 0; // Initialize alpha values to 0
   }
+
+  bg = loadImage("image.png"); // replace "image.png" with the name of your image
 }
 
 void draw() {
   background(255);
+  image(bg, 0, 0, width, height); // scales the image to fit the size of the window
+
 
   // Update and draw existing blobs
   for (int i = 0; i < numBlobs; i++) {
