@@ -24,12 +24,16 @@ void draw() {
 
   // Update and draw existing blobs
   for (int i = 0; i < numBlobs; i++) {
+    noiseOffset[i] += 0.02;
     if (radius[i] <200) {
       radius[i] += 0.5; // Increase the radius slowly
     }
-    blob(clicksX[i], clicksY[i], radius[i], alphaValues[i]); // add noise to radius
+    blob(clicksX[i], clicksY[i], radius[i], alphaValues[i], noiseOffset[i]);
+
+
+
     noiseOffset[i] += 0.01; // increment noise offset
-    if(alphaValues[i] < 255) alphaValues[i] += 2; // increase the alpha value
+    if (alphaValues[i] < 255) alphaValues[i] += 2; // increase the alpha value
   }
 
   // If there are fewer than 100 blobs, create a new one at the mouse position
@@ -53,16 +57,16 @@ void draw() {
   }
 }
 
-void blob(float x, float y, float r, int alphaValue) {
+void blob(float x, float y, float r, int alphaValue, float noiseOffset) {
   beginShape();
   noStroke();
-  fill(33, 33, 33, alphaValue); // Add alpha value to fill function
+  fill(33, 33, 33, alphaValue);
   for (float angle = 0; angle < TWO_PI; angle += PI/50.0) {
-    float noiseVal = noise((x + r * cos(angle)) * noiseFactor, (y + r * sin(angle)) * noiseFactor);
-    float r2 = r + noiseVal * 10; // Increase radius based on noise value
-    float px = x + r2 * cos(angle);
-    float py = y + r2 * sin(angle);
-    vertex(px, py);
+    float r2 = r;
+    float px = x + r2 * cos(angle) + noise(noiseOffset) * 10; // add noise to x-coordinate
+    float py = y + r2 * sin(angle) + noise(noiseOffset + 100) * 10; // add noise to y-coordinate, offset is added to create different noise
+    curveVertex(px, py);
+    noiseOffset += 0.1; // increment the offset
   }
   endShape(CLOSE);
 }
