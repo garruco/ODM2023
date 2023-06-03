@@ -36,7 +36,6 @@ void draw() {
 
     noiseOffset[i] += 0.01; // increment noise offset
     if (alphaValues[i] > 70) decrease[i]=true;
-    else if (alphaValues[i] <= 0) decrease[i]=false;
 
     if (decrease[i] == false) alphaValues[i] += 2;
     else if (decrease[i] == true) alphaValues[i] -= 1;
