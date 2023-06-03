@@ -26,7 +26,6 @@ void draw() {
   background(255);
   image(bg, 0, 0, width, height); // scales the image to fit the size of the window
 
-
   // Update and draw existing blobs
   for (int i = 0; i < numBlobs; i++) {
     noiseOffset[i] += 0.02;
@@ -34,8 +33,6 @@ void draw() {
       radius[i] += 0.5; // Increase the radius slowly
     }
     blob(clicksX[i], clicksY[i], radius[i], alphaValues[i], noiseOffset[i]);
-
-
 
     noiseOffset[i] += 0.01; // increment noise offset
     if (alphaValues[i] < 255) alphaValues[i] += 2; // increase the alpha value
