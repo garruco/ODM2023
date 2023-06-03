@@ -1,4 +1,4 @@
-int fps = 30;
+int fps = 60;
 int[] clicksX = new int[100];  // array to store x-coordinates of blobs
 int[] clicksY = new int[100];  // array to store y-coordinates of blobs
 float[] radius = new float[100];
