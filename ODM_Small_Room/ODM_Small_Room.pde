@@ -65,7 +65,7 @@ void draw() {
 void blob(float x, float y, float r, int alphaValue, float noiseOffset) {
   beginShape();
   noStroke();
-  fill(33, 33, 33, alphaValue);
+  fill(#0F1214, alphaValue);
   for (float angle = 0; angle < TWO_PI; angle += PI/50.0) {
     float r2 = r;
     float px = x + r2 * cos(angle) + noise(noiseOffset) * 10; // add noise to x-coordinate
